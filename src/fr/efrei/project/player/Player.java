@@ -26,17 +26,17 @@ public class Player {
         return tmp;
     }
 
-    public void play(Player player)
+    public void play()
     {
 
 
-        Player.turn(player);
+        Player.turn(this);
 
     }
 
     private static void turn(Player player)
     {
-        /**
+        /*
          * Concentre les actions concernant le tour du joueur
          */
         System.out.println("Votre tour commence");
@@ -45,7 +45,6 @@ public class Player {
         boolean end;
 
         do {
-            System.out.println();
             String choice = sc.nextLine();
             end = true;
 
@@ -56,6 +55,7 @@ public class Player {
                     break;
                 default:
                     end = false;
+                    System.out.println("Faites un choix");
                     break;
             }
 

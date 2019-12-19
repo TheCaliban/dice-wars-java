@@ -1,8 +1,0 @@
-<keymap version="1" name="Windows copy" parent="$default">
-  <action id="CommentByBlockComment">
-    <keyboard-shortcut first-keystroke="shift ctrl colon" />
-  </action>
-  <action id="CommentByLineComment">
-    <keyboard-shortcut first-keystroke="ctrl colon" />
-  </action>
-</keymap>
