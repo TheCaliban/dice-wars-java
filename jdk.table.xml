@@ -1,0 +1,92 @@
+<application>
+  <component name="ProjectJdkTable">
+    <jdk version="2">
+      <name value="11" />
+      <type value="JavaSDK" />
+      <version value="java version &quot;11.0.4&quot;" />
+      <homePath value="$APPLICATION_HOME_DIR$/jbr" />
+      <roots>
+        <annotationsPath>
+          <root type="composite">
+            <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/jdkAnnotations.jar!/" type="simple" />
+          </root>
+        </annotationsPath>
+        <classPath>
+          <root type="composite">
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.base" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.compiler" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.datatransfer" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.desktop" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.instrument" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.logging" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.management" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.management.rmi" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.naming" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.net.http" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.prefs" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.rmi" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.scripting" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.se" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.security.jgss" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.security.sasl" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.smartcardio" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.sql" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.sql.rowset" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.transaction.xa" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.xml" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/java.xml.crypto" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.base" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.controls" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.fxml" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.graphics" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.media" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.swing" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/javafx.web" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.accessibility" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.aot" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.attach" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.charsets" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.compiler" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.crypto.cryptoki" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.crypto.ec" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.dynalink" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.httpserver" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.ed" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.jvmstat" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.le" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.vm.ci" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.vm.compiler" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.internal.vm.compiler.management" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.jdi" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.jdwp.agent" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.jfr" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.jsobject" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.localedata" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.management" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.management.agent" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.management.jfr" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.naming.dns" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.naming.rmi" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.net" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.pack" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.scripting.nashorn" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.scripting.nashorn.shell" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.sctp" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.security.auth" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.security.jgss" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.unsupported" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.xml.dom" type="simple" />
+            <root url="jrt://C:/Program Files/JetBrains/IntelliJ IDEA/jbr!/jdk.zipfs" type="simple" />
+          </root>
+        </classPath>
+        <javadocPath>
+          <root type="composite" />
+        </javadocPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+  </component>
+</application>
