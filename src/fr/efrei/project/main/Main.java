@@ -34,9 +34,7 @@ public class Main {
         }
 
         g.initGame();
-
-
-
+        System.out.println(g);
     }
 
     private static int pickPlayer()

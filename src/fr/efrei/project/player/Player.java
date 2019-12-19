@@ -64,7 +64,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Joueur " +
-                "" + id;
+        return "(Joueur " + id + ")";
     }
 }
