@@ -1,6 +1,10 @@
 package fr.efrei.project.player;
 
-import java.sql.SQLOutput;
+import fr.efrei.project.map.Case;
+import fr.efrei.project.map.Map;
+
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Player {
@@ -8,10 +12,12 @@ public class Player {
     private static int globalId = 0;
 
     private int id;
+    private HashSet<Case> listLand;
 
     public Player()
     {
         this.id = ++globalId;
+        this.listLand = new HashSet<>();
     }
 
     public static Player[] createMultiplePlayer(int nbPlayer)
@@ -26,11 +32,35 @@ public class Player {
         return tmp;
     }
 
+
     public void play()
     {
+        boolean end;
+        Scanner sc = new Scanner(System.in);
+        do {
 
+            end = false;
+            System.out.println("Voulez vous continuer à jouer ? (y/n)");
+            String choice = sc.nextLine();
+            switch(choice)
+            {
+                case "y":
+                    Player.turn(this);
+                    break;
+                case "n":
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Entrée non prise en charge");
+                    break;
+            }
 
-        Player.turn(this);
+        } while(!end);
+
+    }
+
+    public static void initPlayer(Player[] player, Map map)
+    {
 
     }
 
@@ -60,6 +90,20 @@ public class Player {
             }
 
         } while(!end);
+    }
+
+    public void attack(int attacker, int challenger)
+    {
+
+    }
+    public void conqueerNewLand(Case c)
+    {
+        listLand.add(c);
+    }
+
+    private static void loseLand(Case c)
+    {
+
     }
 
     @Override

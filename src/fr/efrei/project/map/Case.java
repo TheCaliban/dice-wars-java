@@ -8,13 +8,17 @@ public class Case {
 
     private static int global_mapid = 0;
 
-    private String id;
+    private final int id;
+    private final String name;
     private Player owner;
+    private int diceQty;
 
     public Case(Player owner)
     {
-        this.id = "map_" + ++global_mapid;
+        this.id = ++global_mapid;
+        this.name = "map_" + id;
         this.owner = owner;
+        this.diceQty = 1;
     }
 
     public Case()
@@ -22,19 +26,35 @@ public class Case {
         this(null);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public int getDiceQty() {
+        return diceQty;
+    }
+
     public void setOwner(Player p)
     {
         this.owner = p;
     }
 
-    public String getId() {
-        return id;
+    public void setDiceQty(int diceQty) {
+        this.diceQty = diceQty;
     }
 
     @Override
     public String toString() {
         if(Objects.isNull(owner)) {
-            return "(" + id + ", *" + ")";
+            return "(" + id + ", (****** *)" + ")";
         }
         return "(" + id + ", " + owner + ")";
     }

@@ -1,5 +1,6 @@
 package fr.efrei.project.main;
 
+import fr.efrei.project.exception.UnknownCaseInMap;
 import fr.efrei.project.player.Player;
 
 import java.util.InputMismatchException;
@@ -35,6 +36,13 @@ public class Main {
 
         g.initGame();
         System.out.println(g);
+
+        try {
+            for(int i = 1; i < 81; i++)
+            System.out.println(g.getMap().getCaseFromId(g.getMap().getListCase(), i));
+        } catch (UnknownCaseInMap unknownCaseInMap) {
+            unknownCaseInMap.printStackTrace();
+        }
     }
 
     private static int pickPlayer()
