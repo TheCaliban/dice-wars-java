@@ -26,6 +26,19 @@ public class Case {
         this(null);
     }
 
+     public int augmentStrength(Player p, int dice)
+     {
+         if(p.equals(this.owner) && p.getDiceFree() >= dice)
+         {
+             this.strength += dice;
+         }
+         else
+         {
+             System.out.println("Vous n'avez pas assez de dé ou vous n'êtes pas propriétaire de cette case");
+         }
+         return strength;
+     }
+
     public int getId() {
         return id;
     }

@@ -26,7 +26,7 @@ public class Game {
             throw new InsufficientDiceException();
         }
         this.map = new Map(size);
-        this.player = Player.createMultiplePlayer(nbPlayer, (totalDice / size));
+        this.player = Player.createMultiplePlayer(nbPlayer, (totalDice / nbPlayer));
         this.listOwnedLand = new HashMap<>();
         this.numTurn = 0;
         this.totalDice = totalDice;

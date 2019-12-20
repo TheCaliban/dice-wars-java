@@ -1,7 +1,6 @@
 package fr.efrei.project.player;
 
 import fr.efrei.project.exception.InsufficientDiceAttackException;
-import fr.efrei.project.exception.InsufficientDiceException;
 import fr.efrei.project.exception.UnknownCaseInMap;
 import fr.efrei.project.map.Case;
 import fr.efrei.project.map.Map;
@@ -13,16 +12,16 @@ public class Player {
     private static int globalId = 0;
 
     private int id;
-    private HashSet<Case> listLand;
+    private HashSet<Case> listOwnedLand;
     private int dice;
-    private int diceUsed;
+    private int diceFree;
 
     public Player(int dice)
     {
         this.id = ++globalId;
-        this.listLand = new HashSet<>();
+        this.listOwnedLand = new HashSet<>();
         this.dice = dice;
-        this.diceUsed = 0;
+        this.diceFree = dice;
     }
 
     //Crée les joueurs de la partie
@@ -42,7 +41,8 @@ public class Player {
     // Initialise la liste des territoires du joueur
     public void initPlayer(HashSet<Case> listOwnedLand)
     {
-        this.listLand.addAll(listOwnedLand);
+        this.listOwnedLand.addAll(listOwnedLand);
+        diceFree -= this.listOwnedLand.size();
     }
 
     //L'ensemble des actions qui doivent être calculées au tour du joueur
@@ -57,7 +57,7 @@ public class Player {
         /*
          * Concentre les actions sur lesquelles le joueurs à la main(attack, fin de tour, déplacement de dés)
          */
-        System.out.println("Votre tour commence (option possible: 'a'|'q')");
+        System.out.println("Votre tour commence (option possible: 'a'|'q'|'augment'|'free')");
 
         Scanner sc = new Scanner(System.in);
         boolean end;
@@ -75,6 +75,13 @@ public class Player {
                     System.out.println("Attaquer territoire");
                     dialogAttack(map);
                     break;
+                case "augment":
+                    System.out.println("Augmentation puissance");
+                    augmentStrenght(map);
+                    break;
+                case "free":
+                    System.out.println("Dé(s) restant: " + diceFree);
+                    break;
                 default:
                     end = false;
                     System.out.println("Faites un choix");
@@ -89,13 +96,13 @@ public class Player {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Avec quel territoire souhaitez vous attaquer ? (id)");
-        System.out.println(listLand);
+        System.out.println(listOwnedLand);
 
          int choice_atk = sc.nextInt();
-        try {
+         try {
             Case case_atk = Map.getCaseFromId(map, choice_atk);
             System.out.println("Case attaquant: " + case_atk);
-            if(listLand.contains(case_atk))
+            if(listOwnedLand.contains(case_atk))
             {
                 ArrayList<Case> neighbors = Map.getNeighbors(map, choice_atk);
                 System.out.println(neighbors);
@@ -108,7 +115,6 @@ public class Player {
                 {
                     attack(map, case_atk, case_def);
                 }
-
             }
             else
             {
@@ -117,11 +123,6 @@ public class Player {
         } catch (UnknownCaseInMap | InsufficientDiceAttackException unknownCaseInMap) {
             unknownCaseInMap.printStackTrace();
         }
-    }
-
-    public void addLand(Case c)
-    {
-        listLand.add(c);
     }
 
     public Case attack(Map map, Case attacker, Case defender) throws InsufficientDiceAttackException {
@@ -143,7 +144,7 @@ public class Player {
 
     public void conqueerNewLand(Case c)
     {
-        listLand.add(c);
+        listOwnedLand.add(c);
     }
 
     private static void loseLand(Case c)
@@ -151,12 +152,38 @@ public class Player {
 
     }
 
-    public HashSet<Case> getListLand() {
-        return listLand;
+    public int augmentStrenght(Map map)
+    {
+        System.out.println("Il vous reste " + diceFree + "dé(s), combien sougaitez vous en mettre ?");
+        Scanner sc = new Scanner(System.in);
+        int diceQty = sc.nextInt();
+
+        System.out.println("Quelle case souhaité vous rendre plus forte ? (id)");
+        System.out.println(listOwnedLand);
+        int idCase = sc.nextInt();
+
+        Case c = null;
+        try {
+            c = Map.getCaseFromId(map, idCase);
+            return c.augmentStrength(this, dice);
+
+        } catch (UnknownCaseInMap unknownCaseInMap) {
+            unknownCaseInMap.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public HashSet<Case> getListOwnedLand() {
+        return listOwnedLand;
     }
 
     public String getPlayerInfo () {
         return "(Joueur " + id + ")";
+    }
+
+    public int getDiceFree() {
+        return diceFree;
     }
 
     @Override
@@ -166,20 +193,20 @@ public class Player {
         Player player = (Player) o;
         return id == player.id &&
                 dice == player.dice &&
-                diceUsed == player.diceUsed &&
-                Objects.equals(listLand, player.listLand);
+                diceFree == player.diceFree &&
+                Objects.equals(listOwnedLand, player.listOwnedLand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, listLand, dice, diceUsed);
+        return Objects.hash(id, listOwnedLand, dice, diceFree);
     }
 
     @Override
     public String toString() {
         return "Player{" +
                 "id=" + id +
-                ", listLand=" + listLand +
+                ", listLand=" + listOwnedLand +
                 ", dice=" + dice +
                 '}';
     }
