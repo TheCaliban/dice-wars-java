@@ -3,10 +3,12 @@ package fr.efrei.project.map;
 import fr.efrei.project.exception.UnknownCaseInMap;
 import fr.efrei.project.player.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Map {
     private Case[][] listCase;
@@ -146,6 +148,26 @@ public class Map {
 
     public String getName() {
         return name;
+    }
+
+    public void loadFromFile(String path, Map map) throws FileNotFoundException {
+        Path p = Paths.get(path);
+        if(Files.exists(p))
+        {
+            File f = new File(path);
+            Scanner reader = new Scanner(f);
+
+            while(reader.hasNext())
+            {
+                String[] tmpStr = reader.nextLine().split(";");
+            }
+
+            reader.close();
+        }
+        else
+        {
+            System.out.println("Le chemin d'accès n'a pas été trouvé.");
+        }
     }
 
     @Override
