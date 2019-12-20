@@ -1,5 +1,7 @@
 package fr.efrei.project.main;
 
+import fr.efrei.project.exception.InsufficientDiceException;
+import fr.efrei.project.exception.NotEnoughPlayerException;
 import fr.efrei.project.map.Case;
 import fr.efrei.project.map.Map;
 import fr.efrei.project.player.Player;
@@ -9,18 +11,30 @@ import java.util.concurrent.TimeUnit;
 
 public class Game {
 
+    private final int maxTurn;
+
     private Map map;
     private Player[] player;
     private long timerGame;
-    private HashMap<Player, ArrayList<Case>> listOwnedLand;
+    private HashMap<Player, HashSet<Case>> listOwnedLand;
     private int numTurn;
+    private int totalDice;
 
-    public Game(int nbPlayer, int size)
-    {
+    public Game(int nbPlayer, int size, int totalDice) throws InsufficientDiceException {
+        if(totalDice < Math.pow(size, 2))
+        {
+            throw new InsufficientDiceException();
+        }
         this.map = new Map(size);
-        this.player = Player.createMultiplePlayer(nbPlayer);
+        this.player = Player.createMultiplePlayer(nbPlayer, (totalDice / nbPlayer));
         this.listOwnedLand = new HashMap<>();
         this.numTurn = 0;
+        this.totalDice = totalDice;
+        this.maxTurn = 20;
+    }
+
+    public Game(int nbPlayer, int size) throws InsufficientDiceException {
+        this(nbPlayer, size, new Random().nextInt(20) + (int) Math.pow(size, 2));
     }
 
     public Player[] getListPlayer() {
@@ -29,10 +43,14 @@ public class Game {
 
     public void initGame() {
 
-        this.timerGame = System.currentTimeMillis() - 1000000;
+        this.timerGame = System.currentTimeMillis() - 100000;
         System.out.println("La partie commence sur la carte de " + '\'' + map.getName() + '\'');
         map.initMap(player, listOwnedLand);
-        Player.initPlayer(player, map);
+
+        for (Player value : player) {
+            value.initPlayer(listOwnedLand.get(value));
+        }
+
     }
 
     public String gameTime()
@@ -48,20 +66,69 @@ public class Game {
         return player;
     }
 
-    public void newTurn()
-    {
-        for(int i = 0; i < player.length; i++)
+    public void playGame() throws NotEnoughPlayerException {
+
+        boolean end = true;
+        Scanner sc = new Scanner(System.in);
+
+        if(player.length < 1)
         {
-            player[i].play();
+            throw new NotEnoughPlayerException();
         }
-        numTurn++;
+        while(numTurn < maxTurn && end)
+        {
+            System.out.println("Tour numéro " + numTurn);
+            if(numTurn == 0)
+            {
+                newTurn();
+                numTurn++;
+            }
+            else
+            {
+                end = false;
+                System.out.println("Voulez vous continuer à jouer ? (y/n)");
+                String choice = sc.nextLine();
+                switch (choice) {
+                    case "y":
+                        newTurn();
+                        numTurn++;
+                        break;
+                    case "n":
+                        end = false;
+                        break;
+                    default:
+                        System.out.println("Entrée non prise en charge");
+                        break;
+                }
+            }
+
+        }
+
+        endGame();
+
     }
 
-    public void endGame()
+    private void newTurn() {
+        for(Player p : player)
+        {
+            p.play(map);
+        }
+    }
+
+    private void endGame()
     {
         /*
          * Fonction d'arrêt du jeu, sérialisation
          */
+
+        System.out.println("Votre partie aura durée " + gameTime() + " minute(s)");
+
+        System.out.println(map.toString());
+
+        for(Player p : player)
+        {
+            p.getPlayerInfo();
+        }
     }
 
     @Override

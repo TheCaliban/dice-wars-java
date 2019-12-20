@@ -11,20 +11,33 @@ public class Case {
     private final int id;
     private final String name;
     private Player owner;
-    private int diceQty;
+    private int strength; // En nombre de dés
 
     public Case(Player owner)
     {
         this.id = ++global_mapid;
         this.name = "map_" + id;
         this.owner = owner;
-        this.diceQty = 1;
+        this.strength = 1;
     }
 
     public Case()
     {
         this(null);
     }
+
+     public int augmentStrength(Player p, int dice)
+     {
+         if(p.equals(this.owner) && p.getDiceFree() >= dice)
+         {
+             this.strength += dice;
+         }
+         else
+         {
+             System.out.println("Vous n'avez pas assez de dé ou vous n'êtes pas propriétaire de cette case");
+         }
+         return strength;
+     }
 
     public int getId() {
         return id;
@@ -38,8 +51,8 @@ public class Case {
         return owner;
     }
 
-    public int getDiceQty() {
-        return diceQty;
+    public int getStrength() {
+        return strength;
     }
 
     public void setOwner(Player p)
@@ -47,15 +60,29 @@ public class Case {
         this.owner = p;
     }
 
-    public void setDiceQty(int diceQty) {
-        this.diceQty = diceQty;
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Case aCase = (Case) o;
+        return id == aCase.id &&
+                Objects.equals(name, aCase.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
         if(Objects.isNull(owner)) {
-            return "(" + id + ", (****** *)" + ")";
+            return "(" + id + ", (****** *)" + " - " + strength + ")";
         }
-        return "(" + id + ", " + owner + ")";
+        return "(" + id + ", " + owner.getPlayerInfo() + " - " + strength + ")";
     }
 }
