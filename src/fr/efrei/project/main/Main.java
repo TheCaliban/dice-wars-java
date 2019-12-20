@@ -1,5 +1,7 @@
 package fr.efrei.project.main;
 
+import fr.efrei.project.exception.InsufficientDiceException;
+import fr.efrei.project.exception.NotEnoughPlayerException;
 import fr.efrei.project.exception.UnknownCaseInMap;
 import fr.efrei.project.player.Player;
 
@@ -25,24 +27,26 @@ public class Main {
             sizeMap = Integer.parseInt(args[1]);
         }
 
-        Game g = new Game(nbPlayer, sizeMap);
-        Player[] listPlayer  = g.getListPlayer();
+        Game g;
 
-        for(Player p : listPlayer)
-        {
-            System.out.println(p.toString());
-            p.play();
+        try {
+            g = new Game(nbPlayer, sizeMap);
+            g.initGame();
+            g.playGame();
+//            System.out.println(g);
+
+        } catch (InsufficientDiceException | NotEnoughPlayerException e) {
+            e.printStackTrace();
         }
 
-        g.initGame();
-        System.out.println(g);
-
+/*
         try {
             for(int i = 1; i < 81; i++)
             System.out.println(g.getMap().getCaseFromId(g.getMap().getListCase(), i));
         } catch (UnknownCaseInMap unknownCaseInMap) {
             unknownCaseInMap.printStackTrace();
         }
+*/
     }
 
     private static int pickPlayer()
