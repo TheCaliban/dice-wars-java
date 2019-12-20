@@ -28,6 +28,10 @@ public class Case {
 
      public int augmentStrength(Player p, int dice)
      {
+         System.out.println(p);
+         System.out.println(this.owner);
+         System.out.println(p.getDiceFree());
+         System.out.println(dice);
          if(p.equals(this.owner) && p.getDiceFree() >= dice)
          {
              this.strength += dice;

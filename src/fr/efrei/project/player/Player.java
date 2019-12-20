@@ -16,6 +16,7 @@ public class Player {
     private int dice;
     private int diceFree;
 
+
     public Player(int dice)
     {
         this.id = ++globalId;
@@ -57,19 +58,21 @@ public class Player {
         /*
          * Concentre les actions sur lesquelles le joueurs à la main(attack, fin de tour, déplacement de dés)
          */
-        System.out.println("Votre tour commence (option possible: 'a'|'q'|'augment'|'free')");
+        System.out.print("Votre tour commence ");
 
         Scanner sc = new Scanner(System.in);
         boolean end;
 
         do {
+            System.out.println("(option possible: 'a'|'q'|'augment'|'free'|'afficher')");
             String choice = sc.nextLine();
-            end = true;
+            end = false;
 
             switch (choice)
             {
                 case "q":
                     System.out.println("Tour terminé");
+                    end = true;
                     break;
                 case "a":
                     System.out.println("Attaquer territoire");
@@ -82,8 +85,10 @@ public class Player {
                 case "free":
                     System.out.println("Dé(s) restant: " + diceFree);
                     break;
+                case "afficher":
+                    System.out.println(map);
+                    break;
                 default:
-                    end = false;
                     System.out.println("Faites un choix");
                     break;
             }
@@ -154,9 +159,12 @@ public class Player {
 
     public int augmentStrenght(Map map)
     {
-        System.out.println("Il vous reste " + diceFree + "dé(s), combien sougaitez vous en mettre ?");
         Scanner sc = new Scanner(System.in);
-        int diceQty = sc.nextInt();
+        int diceQty;
+        do {
+            System.out.println("Il vous reste " + diceFree + " dé(s), combien souhaitez vous en mettre ?");
+            diceQty = sc.nextInt();
+        } while(diceQty > diceFree);
 
         System.out.println("Quelle case souhaité vous rendre plus forte ? (id)");
         System.out.println(listOwnedLand);
@@ -165,13 +173,22 @@ public class Player {
         Case c = null;
         try {
             c = Map.getCaseFromId(map, idCase);
-            return c.augmentStrength(this, dice);
+            System.out.println(c);
+            useDice(diceQty);
+            return c.augmentStrength(this, diceQty);
 
         } catch (UnknownCaseInMap unknownCaseInMap) {
             unknownCaseInMap.printStackTrace();
         }
 
         return 0;
+    }
+
+    public void useDice(int dice)
+    {
+        this.diceFree -= dice;
+        System.out.println(this.dice);
+        System.out.println(diceFree);
     }
 
     public HashSet<Case> getListOwnedLand() {
