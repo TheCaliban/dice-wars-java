@@ -1,8 +1,8 @@
 package fr.efrei.project.exception;
 
-public class UnknownCaseInMap extends Exception {
+public class UnknownCaseInMapException extends Exception {
 
-    public UnknownCaseInMap()
+    public UnknownCaseInMapException()
     {
         super("Cette case n'appartient pas à la carte");
     }
