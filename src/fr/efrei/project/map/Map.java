@@ -123,20 +123,30 @@ public class Map {
         System.out.println("x: " + x);
         System.out.println("y: " + y);
 
+        Player owner = map.getListCase()[x][y].getOwner();
+        Case tmp;
         //to refactor
 
         if (x > 0) {
-            neighbors.add(map.getListCase()[x - 1][y]);
+            tmp = map.getListCase()[x - 1][y];
+            if(!tmp.getOwner().equals(owner))
+                neighbors.add(map.getListCase()[x - 1][y]);
         }
         if(x < 8) {
-            neighbors.add(map.getListCase()[x + 1][y]);
+            tmp  = map.getListCase()[x + 1][y];
+            if(!tmp.getOwner().equals(owner))
+                neighbors.add(map.getListCase()[x + 1][y]);
         }
         if(y > 0)
         {
-            neighbors.add(map.getListCase()[x][y - 1]);
+            tmp = map.getListCase()[x][y - 1];
+            if(!tmp.getOwner().equals(owner))
+                neighbors.add(map.getListCase()[x][y - 1]);
         }
         if (y < 8) {
-            neighbors.add(map.getListCase()[x][y + 1]);
+            tmp = map.getListCase()[x][y + 1];
+            if(!tmp.getOwner().equals(owner))
+                neighbors.add(map.getListCase()[x][y + 1]);
         }
         return neighbors;
     }
@@ -151,6 +161,14 @@ public class Map {
 
     public String getName() {
         return name;
+    }
+
+    public HashMap<Player, Integer> calculLimitLand() {
+
+        HashMap<Player, Integer> hm = new HashMap<>();
+
+        return hm;
+
     }
 
     public void loadFromFile(String path, Map map) throws FileNotFoundException {
@@ -205,4 +223,5 @@ public class Map {
 
         return tmp.toString();
     }
+
 }

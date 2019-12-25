@@ -70,6 +70,7 @@ public class Game {
 
         boolean end = true;
         Scanner sc = new Scanner(System.in);
+        HashMap<Player, Integer> diceByPlayer;
 
         if(player.length < 1)
         {
@@ -80,8 +81,10 @@ public class Game {
             System.out.println("Tour numéro " + numTurn);
             if(numTurn == 0)
             {
-                newTurn();
                 numTurn++;
+                newTurn();
+                diceByPlayer = map.calculLimitLand();
+                attributeDiceToPlayer(diceByPlayer);
             }
             else
             {
@@ -90,8 +93,8 @@ public class Game {
                 String choice = sc.nextLine();
                 switch (choice) {
                     case "y":
-                        newTurn();
                         numTurn++;
+                        newTurn();
                         break;
                     case "n":
                         end = false;
@@ -105,6 +108,16 @@ public class Game {
         }
 
         endGame();
+
+    }
+
+    private void attributeDiceToPlayer(HashMap<Player, Integer> diceByPlayer) {
+
+        /*
+         * Fonction pour ajouter les dés au joueur et les répartir aléatoirement sur la carte (peut être découpé en s-f)
+         */
+
+        System.out.println("Tout les dés ont bien été attribués");
 
     }
 

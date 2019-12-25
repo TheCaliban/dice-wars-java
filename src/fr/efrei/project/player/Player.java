@@ -168,7 +168,7 @@ public class Player {
                 }
 
                 if (neighbors.contains(case_def)) {
-                    attack(map, case_atk, case_def);
+                    Case tmp_c = attack(map, case_atk, case_def);
                     okDef = true;
                 } else {
                     System.out.println("Vous ne possédez pas cette case");
@@ -185,15 +185,17 @@ public class Player {
         int totalStrengthDef = calculTotalStrength(defender.getStrength());
 
         System.out.println("Vous avez fait " + totalStrengthAtk + " points de dégats totaux.");
-        System.out.println("Votre adversaire a fait " + totalStrengthDef + " points de dégats totaux.");
+        System.out.println("Votre adversaire a fait " + totalStrengthDef + " points de dégats totaux.\n");
 
 
         if(totalStrengthAtk > totalStrengthDef)
         {
+            System.out.println("Vous avez gagné la bataille de " + (totalStrengthAtk - totalStrengthDef) + "!\n");
             return attacker;
         }
         else
         {
+            System.out.println("Vous avez perdu la bataille de " + (totalStrengthDef - totalStrengthAtk) + "!\n");
             return defender;
         }
     }
@@ -203,15 +205,11 @@ public class Player {
         Integer[] diceTotalStrength = new Integer[size]; // Ne sert pas pour le moment mais pour le suivi des jets de dés
         int totalStrength = 0;
 
-        for(int i = 0; i < size; i++)
-        {
+        for(int i = 0; i < size; i++) {
             int tmp = new Random().nextInt(6) + 1;
             diceTotalStrength[i] = tmp;
             totalStrength += tmp;
         }
-
-        System.out.println(diceTotalStrength);
-
         return totalStrength;
     }
 
