@@ -1,6 +1,6 @@
 package fr.efrei.project.map;
 
-import fr.efrei.project.exception.UnknownCaseInMap;
+import fr.efrei.project.exception.UnknownCaseInMapException;
 import fr.efrei.project.player.Player;
 
 import java.io.File;
@@ -54,7 +54,7 @@ public class Map {
 
                                 landByP[tmp] += 1;
                                 break;
-                            } catch (UnknownCaseInMap unknownCaseInMap) {
+                            } catch (UnknownCaseInMapException unknownCaseInMap) {
                                 unknownCaseInMap.printStackTrace();
                                 break;
                             }
@@ -79,16 +79,16 @@ public class Map {
         System.out.println("Initialisation finie");
     }
 
-    public static Case getCaseFromIndex(Map map, int x, int y) throws UnknownCaseInMap {
+    public static Case getCaseFromIndex(Map map, int x, int y) throws UnknownCaseInMapException {
         if (x < map.getListCase().length && y < map.getListCase()[0].length) {
             return map.getListCase()[x][y];
         } else {
-            throw new UnknownCaseInMap();
+            throw new UnknownCaseInMapException();
         }
     }
 
-    public static Case getCaseFromId(Map map, int id) throws UnknownCaseInMap {
-        if (id > 0 && id < Math.pow(map.getListCase().length, 2)) {
+    public static Case getCaseFromId(Map map, int id) throws UnknownCaseInMapException {
+        if (id >= 0 && id < Math.pow(map.getListCase().length, 2)) {
             Integer[] index = Map.getIndexFromId(map, id);
 /*
             System.out.println("getCaseFromId id: " + id);
@@ -96,15 +96,18 @@ public class Map {
 */
             return map.getListCase()[index[0]][index[1]];
         } else {
-            throw new UnknownCaseInMap();
+            throw new UnknownCaseInMapException();
         }
     }
 
+    /*
+     * Renvoie les coordonnées i,j calculé sur l'id
+     */
     public static Integer[] getIndexFromId(Map map, int id) {
         Integer[] coordinates = new Integer[2];
 
         coordinates[0] = id / (map.getListCase().length);
-        coordinates[1] = (id % (map.getListCase().length) - 1);
+        coordinates[1] = (id % (map.getListCase().length));
 
         return coordinates;
 
@@ -178,6 +181,23 @@ public class Map {
             tmp.append("[ ");
             for (Case c : tabCase) {
                 tmp.append("(").append(c).append(") \t");
+            }
+            tmp.append("]\n");
+        }
+        tmp.append("\n");
+
+        return tmp.toString();
+    }
+
+
+
+    public String getColoredMap(int player) {
+        StringBuilder tmp = new StringBuilder("Carte: " + name + "\n");
+
+        for (Case[] tabCase : this.listCase) {
+            tmp.append("[ ");
+            for (Case c : tabCase) {
+                tmp.append("(").append(c.getColoredCase(player)).append(") \t");
             }
             tmp.append("]\n");
         }

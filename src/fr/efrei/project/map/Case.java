@@ -15,15 +15,18 @@ public class Case {
 
     public Case(Player owner)
     {
-        this.id = ++global_mapid;
+        this.id = global_mapid++;
         this.name = "map_" + id;
         this.owner = owner;
         this.strength = 1;
     }
 
+    /*
+     * Le player 0 sera considéré comme terrain neutre
+     */
     public Case()
     {
-        this(null);
+        this(Player.getNeutre());
     }
 
      public int augmentStrength(Player p, int dice)
@@ -84,9 +87,22 @@ public class Case {
 
     @Override
     public String toString() {
-        if(Objects.isNull(owner)) {
+        if(owner.equals(Player.getNeutre())) {
             return "(" + id + ", (****** *)" + " - " + strength + ")";
         }
         return "(" + id + ", " + owner.getPlayerInfo() + " - " + strength + ")";
+    }
+
+    public String getColoredCase(int player) {
+
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_GREEN = "\u001B[32m";
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_WHITE = "\u001B[37m";
+
+        return "(" + id + ", " +
+                owner.getPlayerInfoColored(player) +
+                " - " + strength +
+                ')';
     }
 }

@@ -2,8 +2,6 @@ package fr.efrei.project.main;
 
 import fr.efrei.project.exception.InsufficientDiceException;
 import fr.efrei.project.exception.NotEnoughPlayerException;
-import fr.efrei.project.exception.UnknownCaseInMap;
-import fr.efrei.project.player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
