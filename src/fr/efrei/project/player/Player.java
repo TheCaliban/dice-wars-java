@@ -75,12 +75,12 @@ public class Player {
          */
         System.out.print("Votre tour commence ");
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scT = new Scanner(System.in);
         boolean end;
 
         do {
             System.out.println("(option possible: 'a'|'q'|'augment'|'free'|'afficher')");
-            String choice = sc.nextLine();
+            String choice = scT.nextLine();
             end = false;
 
             switch (choice)
@@ -109,6 +109,9 @@ public class Player {
             }
 
         } while(!end);
+
+        scT.close();
+
     }
 
     private void dialogAttack(Map map) {
@@ -117,8 +120,8 @@ public class Player {
 
         boolean okAtk = false;
         boolean okDef = false;
-        int choice_atk;
-        int choice_def;
+        String choice_atk;
+        String choice_def;
         ArrayList<Case> neighbors;
 
         do {
@@ -128,8 +131,14 @@ public class Player {
 
             Case case_atk;
             try {
-                choice_atk = sc.nextInt();
-                case_atk = Map.getCaseFromId(map, choice_atk);
+                choice_atk = sc.nextLine();
+                System.out.println(choice_atk);
+                if(choice_atk.equals("q"))
+                {
+                    System.out.println("Attack end");
+                    break;
+                }
+                case_atk = Map.getCaseFromId(map, Integer.parseInt(choice_atk));
 
                 if(case_atk.getStrength() < 2) {
                     throw new InsufficientDiceAttackException();
@@ -137,7 +146,7 @@ public class Player {
             } catch (UnknownCaseInMapException | InsufficientDiceAttackException e) {
                 System.out.println(e.getMessage());
                 continue;
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException | NumberFormatException e) {
                 System.out.println("Veuillez renseigner un nombre");
                 continue;
             }
@@ -148,7 +157,7 @@ public class Player {
             }
 
             okAtk = true;
-            neighbors = Map.getNeighbors(map, choice_atk);
+            neighbors = Map.getNeighbors(map, Integer.parseInt(choice_atk));
 
             do {
 
@@ -157,8 +166,16 @@ public class Player {
 
                 Case case_def;
                 try {
-                    choice_def = sc.nextInt();
-                    case_def = Map.getCaseFromId(map, choice_def);
+                    choice_def = sc.nextLine();
+                    System.out.println(choice_atk);
+
+                    if(choice_def.equals("q"))
+                    {
+                        System.out.println("Def end");
+                        break;
+                    }
+
+                    case_def = Map.getCaseFromId(map, Integer.parseInt(choice_def));
                 } catch (UnknownCaseInMapException e) {
                     System.out.println(e.getMessage());
                     continue;
@@ -171,7 +188,7 @@ public class Player {
                     Case tmp_c = attack(map, case_atk, case_def);
                     okDef = true;
                 } else {
-                    System.out.println("Vous ne possédez pas cette case");
+                    System.out.println("Cette case n'est pas à proximité");
                 }
 
             } while (!okDef);
@@ -179,7 +196,7 @@ public class Player {
         } while (!okAtk);
     }
 
-    public Case attack(Map map, Case attacker, Case defender) {
+    private Case attack(Map map, Case attacker, Case defender) {
 
         int totalStrengthAtk = calculTotalStrength(attacker.getStrength());
         int totalStrengthDef = calculTotalStrength(defender.getStrength());
@@ -191,13 +208,28 @@ public class Player {
         if(totalStrengthAtk > totalStrengthDef)
         {
             System.out.println("Vous avez gagné la bataille de " + (totalStrengthAtk - totalStrengthDef) + "!\n");
+            winBattle(attacker, defender);
             return attacker;
         }
         else
         {
             System.out.println("Vous avez perdu la bataille de " + (totalStrengthDef - totalStrengthAtk) + "!\n");
+            loseBattle(attacker, defender);
             return defender;
         }
+    }
+
+    private void winBattle(Case a, Case b)
+    {
+        Player lOwner = b.getOwner();
+        lOwner.lostLand(b);
+        this.conqueerLand(a, b);
+
+    }
+
+    private void loseBattle(Case a, Case b)
+    {
+
     }
 
     private int calculTotalStrength(int size)
@@ -213,17 +245,7 @@ public class Player {
         return totalStrength;
     }
 
-    public void conqueerNewLand(Case c)
-    {
-        listOwnedLand.add(c);
-    }
-
-    private static void loseLand(Case c)
-    {
-
-    }
-
-    public int augmentStrenght(Map map)
+    public void augmentStrenght(Map map)
     {
         Scanner sc = new Scanner(System.in);
         int diceQty;
@@ -232,28 +254,60 @@ public class Player {
             diceQty = sc.nextInt();
         } while(diceQty > diceFree);
 
-        System.out.println("Quelle case souhaité vous rendre plus forte ? (id)");
+        System.out.println("Quelle case souhaitez vous rendre plus forte ? (id)");
         System.out.println(listOwnedLand);
-        int idCase = sc.nextInt();
 
         Case c;
         try {
+            int idCase = sc.nextInt();
+
             c = Map.getCaseFromId(map, idCase);
-            System.out.println(c);
+
+            if(!listOwnedLand.contains(c))
+            {
+                System.out.println("Vous ne possédez pas cette case");
+                return;
+            }
+            c.augmentStrength(diceQty);
             useDice(diceQty);
-            return c.augmentStrength(this, diceQty);
 
         } catch (UnknownCaseInMapException unknownCaseInMap) {
             unknownCaseInMap.printStackTrace();
+        } catch (InputMismatchException e)
+        {
+            System.out.println("Veuillez renseigner un nombre");
         }
+    }
 
-        return 0;
+    public void conqueerLand(Case a, Case b)
+    {
+        if(this.listOwnedLand.contains(b))
+        {
+            System.out.println("Vous possédez déja cette case...");
+        }
+        else
+        {
+            System.out.println("cl s");
+            this.listOwnedLand.add(b);
+            b.setStrength(a.getStrength() - 1);
+            a.setStrength(1);
+        }
+    }
+
+    public void lostLand(Case c)
+    {
+        c.setStrength(0);
+        if(this.listOwnedLand.contains(c))
+        {
+            System.out.println("lostland s");
+            listOwnedLand.remove(c);
+        }
     }
 
     public void useDice(int dice)
     {
         this.diceFree -= dice;
-        System.out.println(this.dice);
+        System.out.println(dice);
         System.out.println(diceFree);
     }
 
