@@ -1,0 +1,11 @@
+.\idea/*
+out/
+*.xml
+dice_wars.iml
+_windows/*
+keymaps/*
+codestyles/*
+github.xml
+editor.xml
+debugger.xml
+colors.scheme.xml
