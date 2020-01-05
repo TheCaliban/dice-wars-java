@@ -208,7 +208,11 @@ public class Player {
         if(totalStrengthAtk > totalStrengthDef)
         {
             System.out.println("Vous avez gagné la bataille de " + (totalStrengthAtk - totalStrengthDef) + "!\n");
+            System.out.println(attacker.getOwner().getListOwnedLand());
+            System.out.println(defender.getOwner().getListOwnedLand());
             winBattle(attacker, defender);
+            System.out.println(attacker.getOwner().getListOwnedLand());
+            System.out.println(defender.getOwner().getListOwnedLand());
             return attacker;
         }
         else
@@ -219,11 +223,11 @@ public class Player {
         }
     }
 
-    private void winBattle(Case a, Case b)
+    private void winBattle(Case atk, Case def)
     {
-        Player lOwner = b.getOwner();
-        lOwner.lostLand(b);
-        this.conqueerLand(a, b);
+        Player lOwner = def.getOwner();
+        lOwner.lostLand(def);
+        this.conqueerLand(atk, def);
 
     }
 
@@ -291,6 +295,7 @@ public class Player {
             this.listOwnedLand.add(b);
             b.setStrength(a.getStrength() - 1);
             a.setStrength(1);
+            b.setOwner(a.getOwner());
         }
     }
 
